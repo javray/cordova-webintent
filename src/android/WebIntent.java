@@ -58,7 +58,13 @@ public class WebIntent extends CordovaPlugin {
                     JSONArray extraNames = extras.names();
                     for (int i = 0; i < extraNames.length(); i++) {
                         String key = extraNames.getString(i);
-                        String value = extras.getString(key);
+                        Object oValue = extras.get(key);
+                        if (oValue instanceOf Integer) {
+                            int value = extras.getInteger(key);
+                        }
+                        else {
+                            String value = extras.getString(key);
+                        }
                         extrasMap.put(key, value);
                     }
                 }
