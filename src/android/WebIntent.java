@@ -198,7 +198,7 @@ public class WebIntent extends CordovaPlugin {
             } else if (key.equals(Intent.EXTRA_EMAIL)) {
                 // allows to add the email address of the receiver
                 i.putExtra(Intent.EXTRA_EMAIL, new String[] { value });
-            } else {
+            } else if (key.contains("_type")) {
                 try {
                     Integer v = Integer.parseInt(value);
                     Log.v("WebIntent", value);
@@ -207,8 +207,10 @@ public class WebIntent extends CordovaPlugin {
                 catch (Exception e) {
                     i.putExtra(key, value);
                 }
-                    
+            } else {
+                i.putExtra(key, value);
             }
+            
         }
         ((CordovaActivity)this.cordova.getActivity()).startActivity(i);
     }
