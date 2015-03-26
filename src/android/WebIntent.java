@@ -16,6 +16,8 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 
+import android.util.Log;
+
 /**
  * WebIntent is a PhoneGap plugin that bridges Android intents and web
  * applications:
@@ -199,6 +201,7 @@ public class WebIntent extends CordovaPlugin {
             } else {
                 try {
                     Integer v = Integer.parseInt(value);
+                    Log.v("WebIntent", value);
                     i.putExtra(key, v);
                 }
                 catch (Exception e) {
