@@ -51,36 +51,19 @@ public class WebIntent extends CordovaPlugin {
                 String pack = obj.has("package") ? obj.getString("package") : null;
                 Uri uri = obj.has("url") ? Uri.parse(obj.getString("url")) : null;
                 JSONObject extras = obj.has("extras") ? obj.getJSONObject("extras") : null;
-               // Map<String, String> extrasMap = new HashMap<String, String>();
+               Map<String, String> extrasMap = new HashMap<String, String>();
 
-                Intent intent = new Intent(obj.getString("action"), uri);
-                if (type != null) {
-                    intent.setType(type);
-                }
-                if (pack != null) {
-                    intent.setPackage(pack);
-                }
-                
                 // Populate the extras if any exist
                 if (extras != null) {
                     JSONArray extraNames = extras.names();
                     for (int i = 0; i < extraNames.length(); i++) {
                         String key = extraNames.getString(i);
-                        Object oValue = extras.get(key);
-                        if (oValue instanceof Integer) {
-                            intent.putExtra(key, extras.getInt(key));
-                        }
-                        else {
-                            intent.putExtra(key, extras.getString(key));
-                        }
-                        
+                        String value = extras.getString(key);
+                        extrasMap.put(key, value);
                     }
                 }
                 
-                
-                
-                //startActivity(obj.getString("action"), uri, type, pack, extrasMap);
-                startActivity(intent);
+                startActivity(obj.getString("action"), uri, type, pack, extrasMap);
                 //return new PluginResult(PluginResult.Status.OK);
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
                 return true;
@@ -214,7 +197,14 @@ public class WebIntent extends CordovaPlugin {
                 // allows to add the email address of the receiver
                 i.putExtra(Intent.EXTRA_EMAIL, new String[] { value });
             } else {
-                i.putExtra(key, value);
+                try {
+                    Integer v = Integer.parseInt(value);
+                    i.putExtra(key, v);
+                }
+                catch (Excepction e) {
+                    i.putExtra(key, value);
+                }
+                    
             }
         }
         ((CordovaActivity)this.cordova.getActivity()).startActivity(i);
