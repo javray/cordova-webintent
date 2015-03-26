@@ -59,7 +59,7 @@ public class WebIntent extends CordovaPlugin {
                     for (int i = 0; i < extraNames.length(); i++) {
                         String key = extraNames.getString(i);
                         Object oValue = extras.get(key);
-                        if (oValue instanceOf Integer) {
+                        if (oValue instanceof Integer) {
                             int value = extras.getInteger(key);
                         }
                         else {
