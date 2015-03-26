@@ -201,7 +201,7 @@ public class WebIntent extends CordovaPlugin {
                     Integer v = Integer.parseInt(value);
                     i.putExtra(key, v);
                 }
-                catch (Excepction e) {
+                catch (Exception e) {
                     i.putExtra(key, value);
                 }
                     
